@@ -3,9 +3,6 @@ package io.pivotal.coronastats;
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
-import org.apache.maven.model.Model;
-import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
-import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -22,7 +19,6 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-import java.io.FileReader;
 import java.io.IOException;
 
 @SpringBootApplication
@@ -46,13 +42,11 @@ public class CoronoStatsApplication {
     }
 
     @Bean
-    public Docket api() throws IOException, XmlPullParserException {
-        MavenXpp3Reader reader = new MavenXpp3Reader();
-        Model model = reader.read(new FileReader("pom.xml"));
+    public Docket api() throws IOException {
         ApiInfoBuilder builder = new ApiInfoBuilder()
           .title("Corona Stats API Specification")
           .description("Documentation automatically generated")
-          .version(model.getVersion())
+          .version("0.1")
           .contact(new Contact("Ravi Panchal", "pivotal.io", "rpanchal@pivotal.io"));
         return new Docket(DocumentationType.SWAGGER_2).select()
           .apis(RequestHandlerSelectors.basePackage("io.pivotal.coronastats"))
