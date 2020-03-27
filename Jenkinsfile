@@ -17,7 +17,7 @@ pipeline {
     stage('Package') {
       steps {
         sh '''echo \'Packaging the app\'
-./mvnw package'''
+./mvnw -DskipTests package'''
       }
     }
 
